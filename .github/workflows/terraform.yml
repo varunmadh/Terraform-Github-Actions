@@ -10,8 +10,13 @@ env:
   ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET_PSP }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID_PSP }}
   ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID_PSP }}
+<<<<<<< HEAD
   ROOT__PATH: '../../src/terraform'
 
+=======
+  ROOT_PATH: '../../src/terraform'
+  
+>>>>>>> 39d92055be4edfab7b5a0c9a54e7280c4f61a4e4
 jobs:
   build:
     runs-on: ubuntu-latest
