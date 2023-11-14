@@ -10,7 +10,7 @@ env:
   ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET_PSP }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID_PSP }}
   ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID_PSP }}
-  ROOT_PATH: '${{github.workspace}}/terraform.yml
+  ROOT__PATH: '../../src/terraform'
 
 jobs:
   build:
