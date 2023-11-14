@@ -1,52 +1,53 @@
-name: Deploy Snipe-IT with Terraform with Github Actions
+name: Terraform CI/CD using Github Actions
 
 on:
   push:
     branches:
       - varunmadh
-  workflow_dispatch:
 
+env:
+  ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID_PSP }}
+  ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET_PSP }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID_PSP }}
+  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID_PSP }}
+  ROOT_PATH: '${{github.workspace}}/terraform.yml
+  
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: 1.0.0
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v1
 
-      - name: Azure Infra
-        env: 
-          ARM_CLIENT_ID: ${{ secrets.APPLICATION_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.SECRET_VALUE }} 
-          ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
-    
-        run: |
-          cd ${{ github.workspace }}/Terraform-SnipeIT-Automation
-          terraform init
-          terraform plan
-          terraform apply -auto-approve
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS_PSP }}
 
-     # - name: Terraform Init
-      #  run: |
-       #   terraform init
-        #working-directory: ${{ github.workspace }}
+    - name: Terraform Init
+      run: terraform init
+      working-directory: ${{env.ROOT_PATH}}
 
-      #- name: Terraform Plan
-       # run: |
-        #  terraform plan
-        #working-directory: ${{ github.workspace }}
+    - name: Terraform Validate
+      run: terraform validate
+      working-directory: ${{env.ROOT_PATH}}
+
+    - name: Terraform Format
+      run: terraform fmt
+      working-directory: ${{env.ROOT_PATH}}
+
+    - name: Terraform Plan
+      run: terraform plan
+      working-directory: ${{env.ROOT_PATH}}
 
     - name: Terraform Apply
       if: success()
       run: terraform apply -auto-approve
-      
-
+      working-directory: ${{env.ROOT_PATH}}
       
 
     
