@@ -42,10 +42,13 @@ jobs:
         #  terraform plan
         #working-directory: ${{ github.workspace }}
 
-      #- name: Terraform Apply
-       # run: |
-        #  terraform apply -auto-approve
-        #working-directory: ${{ github.workspace }}
+    - name: Terraform Apply
+      if: success()
+      run: terraform apply -auto-approve
+      
+
+      
+
     
     
     
