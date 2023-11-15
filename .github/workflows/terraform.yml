@@ -10,7 +10,11 @@ env:
   ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET_PSP }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID_PSP }}
   ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID_PSP }}
+<<<<<<< HEAD
   ROOT_PATH: ${{ github.workspace }}/src/terraform
+=======
+  ROOT__PATH: ${{github/workflows/src/terraform}}
+>>>>>>> c85167e3d364966a06773714f8916bd6e2943d99
 
 jobs:
   build:
